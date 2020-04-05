@@ -10,17 +10,40 @@ function App() {
   }, [darkMode]);
 
   function getInitialMode() {
+    const isExistingUser = 'dark' in localStorage;
     const darkMode = JSON.parse(localStorage.getItem('dark'));
-    return darkMode || false;
+    const userPrefersDark = getPreferedColorScheme();
+
+    // if user has entered site, use the previously set value
+    if (isExistingUser) {
+      return darkMode;
+    } else if (userPrefersDark) { // if new user, set prefered color scheme
+      return true;
+    } else {    // else default to light mode
+      return false; 
+    }    
+  }
+
+  function getPreferedColorScheme() {
+    if (!window.matchMedia) return;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   }
 
   return (
     <div className={darkMode ? "dark-mode" : "light-mode"}>
       <nav>
         <div className="toggle-container">
-          <button onClick={() => setDarkMode(prevMode => !prevMode)}>
-            Toggle Mode
-          </button>
+          <span style={{color: darkMode ? "grey" : "yellow"}}>☀</span>
+          <span className="toggle">
+            <input
+              checked={darkMode}
+              onChange={() => setDarkMode(prevMode => !prevMode)}
+              type="checkbox"
+              className="checkbox"
+              id="checkbox"/>
+            <label htmlFor="checkbox"/>
+          </span>
+          <span style={{color: darkMode? "slateblue" : "grey"}}>☾</span>
         </div>
       </nav>
       <main>

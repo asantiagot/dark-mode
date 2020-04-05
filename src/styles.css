@@ -7,6 +7,11 @@ body {
   .light-mode {
     background-color: #fff;
     color: #333;
+    transition: background-color 0.25s ease-out;
+  }
+
+  .light-mode nav {
+    transition: background-color 0.25s ease-out;
   }
 
   .dark-mode {
@@ -16,7 +21,7 @@ body {
 
   .dark-mode nav {
       background-color: #1b2938;
-      
+
   }
   
   nav {
